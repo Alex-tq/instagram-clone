@@ -1,4 +1,13 @@
-.app__headerImage {
+.app__header {
+  display: flex;
+  justify-content: center;
   object-fit: contain;
-  height: 40px;
+  box-sizing: border-box;
+  background-color: white;
+  border-bottom: 1px solid lightgrey;
+  padding: 10px;
+  height: 10vh;
+}
+.app__headerImage {
+  height: 100%;
 }
