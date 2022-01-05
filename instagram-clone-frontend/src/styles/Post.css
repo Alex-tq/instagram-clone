@@ -1,9 +1,31 @@
 .post {
   height: 90vh;
+  width: 500px;
+  max-width: 95vw;
+  border: 1px solid lightgray;
+  margin-bottom: 2rem;
+}
+
+.post_header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.post_avatar {
+  margin-right: 10px;
 }
 
 .post_image {
   object-fit: contain;
-  max-width: 100%;
+  width: 100%;
   max-height: 80%;
+}
+
+.caption {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
