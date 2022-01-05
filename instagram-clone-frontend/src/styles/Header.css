@@ -1,0 +1,4 @@
+.app__headerImage {
+  object-fit: contain;
+  height: 40px;
+}
