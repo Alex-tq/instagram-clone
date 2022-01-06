@@ -2,8 +2,16 @@ import "./styles/App.css";
 import { useState } from "react";
 import Header from "./components/Header";
 import Post from "./components/Post";
+import Modal from "./components/Modal";
+import { Button } from "@mui/material";
 
 function App() {
+  const [open, setOpen] = useState(true);
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [posts, setPost] = useState([
     {
       avatarUrl:
@@ -24,7 +32,7 @@ function App() {
     {
       avatarUrl:
         "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWVtZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
-      username: "User2",
+      username: "User3",
       caption: "this is the post caption",
       imgUrl:
         "https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZnVubnl8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
@@ -33,6 +41,7 @@ function App() {
 
   const postList = posts.map(({ imgUrl, avatarUrl, username, caption }) => (
     <Post
+      key={username}
       avatarUrl={avatarUrl}
       username={username}
       caption={caption}
@@ -40,8 +49,28 @@ function App() {
     />
   ));
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleChange = (e) => {
+    console.log(userData);
+    const { name, value } = e.target;
+    setUserData((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div className="app">
+      <Modal
+        open={open}
+        onClose={handleClose}
+        username={userData.username}
+        email={userData.email}
+        password={userData.password}
+        handleChange={(e) => handleChange(e)}
+      />
+      <Button onClick={() => setOpen(true)}>Sign Up</Button>
+
       <Header />
 
       {postList}
