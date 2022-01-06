@@ -3,9 +3,28 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400;
+  width: 400px;
+  max-width: 80vw;
   background-color: lightgray;
   border: 2px solid #000;
   box-shadow: 24;
-  padding: 1rem;
+  padding: 1.5rem;
+}
+
+.signup_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modal_logo {
+  object-fit: contain;
+  box-sizing: border-box;
+
+  border-bottom: 1px solid lightgrey;
+  padding: 0.3rem;
+  height: 50px;
+}
+.modal__logoImage {
+  height: 100%;
 }

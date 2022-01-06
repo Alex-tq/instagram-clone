@@ -6,7 +6,8 @@ import Modal from "./components/Modal";
 import { Button } from "@mui/material";
 
 function App() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const [userData, setUserData] = useState({
     username: "",
     email: "",
@@ -54,22 +55,50 @@ function App() {
   };
 
   const handleChange = (e) => {
-    console.log(userData);
     const { name, value } = e.target;
     setUserData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const signUp = (e) => {
+    e.preventDefault();
+    console.log(userData.username + " signed up");
+
+    const { username, email, password } = userData;
+    if (username && email && password) {
+      setUser(userData.username);
+      setOpen(false);
+      setUserData({
+        username: "",
+        email: "",
+        password: "",
+      });
+    } else {
+      alert("Please fill out all the fields");
+    }
   };
 
   return (
     <div className="app">
       <Modal
         open={open}
-        onClose={handleClose}
+        handleClose={handleClose}
         username={userData.username}
         email={userData.email}
         password={userData.password}
         handleChange={(e) => handleChange(e)}
+        signUp={(e) => signUp(e)}
       />
-      <Button onClick={() => setOpen(true)}>Sign Up</Button>
+      {user ? (
+        <Button
+          onClick={() => {
+            setUser(null);
+          }}
+        >
+          Log Out
+        </Button>
+      ) : (
+        <Button onClick={() => setOpen(true)}>Sign Up</Button>
+      )}
 
       <Header />
 
