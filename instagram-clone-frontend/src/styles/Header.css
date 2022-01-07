@@ -1,6 +1,6 @@
 .app__header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   object-fit: contain;
   box-sizing: border-box;
   background-color: white;
@@ -10,4 +10,10 @@
 }
 .app__headerImage {
   height: 100%;
+}
+
+.header_buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
