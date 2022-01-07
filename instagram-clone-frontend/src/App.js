@@ -88,19 +88,8 @@ function App() {
         handleChange={(e) => handleChange(e)}
         signUp={(e) => signUp(e)}
       />
-      {user ? (
-        <Button
-          onClick={() => {
-            setUser(null);
-          }}
-        >
-          Log Out
-        </Button>
-      ) : (
-        <Button onClick={() => setOpen(true)}>Sign Up</Button>
-      )}
 
-      <Header />
+      <Header setOpen={setOpen} user={user} setUser={setUser} />
 
       {postList}
       {/* Header */}
