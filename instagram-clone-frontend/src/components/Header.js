@@ -3,7 +3,7 @@ import "../styles/Header.css";
 import Button from "@mui/material/Button";
 import AddCircle from "@mui/icons-material/AddCircleOutline";
 
-function Header({ setUser, setOpen, user }) {
+function Header({ setUser, setOpen, user, setIsAddPostOpen }) {
   return (
     <div className="app__header">
       <img
@@ -12,7 +12,7 @@ function Header({ setUser, setOpen, user }) {
         alt="instagram logo"
       />
       <div className="header_buttons">
-        <Button>
+        <Button onClick={() => setIsAddPostOpen(true)}>
           <AddCircle />
         </Button>
 

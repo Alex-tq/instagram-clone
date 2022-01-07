@@ -4,9 +4,11 @@ import Header from "./components/Header";
 import Post from "./components/Post";
 import Modal from "./components/Modal";
 import { Button } from "@mui/material";
+import AddPostModal from "./components/AddPostModal";
 
 function App() {
   const [open, setOpen] = useState(false);
+  const [isAddPostOpen, setIsAddPostOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState({
     username: "",
@@ -52,6 +54,7 @@ function App() {
 
   const handleClose = () => {
     setOpen(false);
+    setIsAddPostOpen(false);
   };
 
   const handleChange = (e) => {
@@ -88,8 +91,16 @@ function App() {
         handleChange={(e) => handleChange(e)}
         signUp={(e) => signUp(e)}
       />
-
-      <Header setOpen={setOpen} user={user} setUser={setUser} />
+      <AddPostModal
+        handleClose={() => handleClose()}
+        isAddPostOpen={isAddPostOpen}
+      />
+      <Header
+        setOpen={setOpen}
+        setIsAddPostOpen={setIsAddPostOpen}
+        user={user}
+        setUser={setUser}
+      />
 
       {postList}
       {/* Header */}
