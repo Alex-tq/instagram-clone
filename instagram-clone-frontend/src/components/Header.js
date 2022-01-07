@@ -12,10 +12,11 @@ function Header({ setUser, setOpen, user, setIsAddPostOpen }) {
         alt="instagram logo"
       />
       <div className="header_buttons">
-        <Button onClick={() => setIsAddPostOpen(true)}>
-          <AddCircle />
-        </Button>
-
+        {user && (
+          <Button onClick={() => setIsAddPostOpen(true)}>
+            <AddCircle />
+          </Button>
+        )}
         {user ? (
           <Button
             onClick={() => {
