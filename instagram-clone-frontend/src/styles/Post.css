@@ -1,7 +1,7 @@
 .post {
   height: 90vh;
   width: 500px;
-  max-width: 95vw;
+  max-width: 100%;
   border: 1px solid lightgray;
   margin-bottom: 2rem;
 }
