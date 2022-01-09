@@ -101,11 +101,7 @@ function App() {
         user={user}
         setUser={setUser}
       />
-
-      {postList}
-      {/* Header */}
-      {/* Post */}
-      {/* Post */}
+      <div className="post_section">{postList}</div>
     </div>
   );
 }
