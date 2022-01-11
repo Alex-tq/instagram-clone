@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import postModel from "./postModel.js";
 
 dotenv.config();
 
@@ -22,6 +23,28 @@ mongoose.connection.once("open", () => {
 
 app.get("/", (req, res) => {
   res.status(200).send("Hello Instagram Clone");
+});
+
+app.post("/upload", (req, res) => {
+  const { body } = req;
+
+  postModel.create(body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(201).send(data);
+    }
+  });
+});
+
+app.get("/sync", (req, res) => {
+  postModel.find((err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
 });
 
 app.listen(PORT, () => {
