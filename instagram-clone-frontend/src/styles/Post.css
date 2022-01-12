@@ -1,9 +1,10 @@
 .post {
-  height: 90vh;
+  min-height: 90vh;
   width: 500px;
   max-width: 100%;
   border: 1px solid lightgray;
   margin-bottom: 2rem;
+  padding: 1rem;
 }
 
 .post_header {
@@ -20,12 +21,17 @@
 .post_image {
   object-fit: contain;
   width: 100%;
-  max-height: 80%;
+  max-height: 70vh;
+  background-color: black;
 }
 
 .caption {
   padding: 0.5rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
+}
+.comment_section {
+  padding: 0.5rem;
+}
+.comment_form {
+  margin-top: 10px;
 }

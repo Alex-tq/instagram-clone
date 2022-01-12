@@ -15,6 +15,21 @@ function Post({ username, caption, imgUrl, avatarUrl }) {
       <p className="caption">
         <strong>{username} </strong> {`: ${caption}`}
       </p>
+      <div className="comment_section">
+        <p className="comment">
+          <strong>SomeUser </strong> Some comment
+        </p>
+        <p className="comment">
+          <strong>SomeUser </strong> Some comment
+        </p>
+        <p className="comment">
+          <strong>SomeUser </strong> Some comment
+        </p>
+        <div className="comment_form">
+          <input type="text" name="comment" id="" />
+          <button>Post</button>
+        </div>
+      </div>
     </div>
   );
 }
