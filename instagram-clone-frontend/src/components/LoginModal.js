@@ -34,13 +34,6 @@ function Modal({
             />
             <Input
               type="text"
-              placeholder="email"
-              name="email"
-              value={email}
-              onChange={handleChange}
-            />
-            <Input
-              type="text"
               placeholder="password"
               name="password"
               value={password}

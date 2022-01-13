@@ -51,6 +51,7 @@ function App() {
 
   const login = (e) => {
     e.preventDefault();
+    console.log("logging in");
   };
 
   const signUp = (e) => {
@@ -113,6 +114,7 @@ function App() {
       <Header
         setIsSignupOpen={setIsSignupOpen}
         setIsAddPostOpen={setIsAddPostOpen}
+        setIsLoginOpen={setIsLoginOpen}
         user={user}
         setUser={setUser}
       />
