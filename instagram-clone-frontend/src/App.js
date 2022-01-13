@@ -66,7 +66,12 @@ function App() {
         },
       })
         .then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((data) => {
+          if (data.error) {
+            alert(data.error);
+          }
+          console.log(data);
+        })
         .catch((e) => console.log(e));
 
       // setUser(userData.username);

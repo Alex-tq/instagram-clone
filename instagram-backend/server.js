@@ -52,7 +52,7 @@ app.post("/signup", async (req, res) => {
     const newUser = await userModel.register(user, password);
     res.send(newUser);
   } catch (e) {
-    console.log(e.message);
+    res.send({ error: e.message });
   }
   // const { body } = req;
 
