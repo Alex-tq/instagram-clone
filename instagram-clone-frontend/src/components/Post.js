@@ -6,7 +6,14 @@ function Post({ username, caption, imgUrl, avatarUrl }) {
   return (
     <div className="post">
       <div className="post_header">
-        <Avatar className="post_avatar" alt="User avatar" src={avatarUrl} />
+        <Avatar
+          sx={{ bgcolor: "#f0f" }}
+          className="post_avatar"
+          alt="User avatar"
+          src={avatarUrl}
+        >
+          {username[0]}
+        </Avatar>
         <h3>{username}</h3>
       </div>
 
