@@ -4,15 +4,34 @@ import cors from "cors";
 import dotenv from "dotenv";
 import postModel from "./models/postModel.js";
 import userModel from "./models/userModel.js";
+import passport from "passport";
+import LocalStrategy from "passport-local";
+import session from "express-session";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 8081;
 const app = express();
+
 const URI = process.env.MONGODB_URI;
+const SESSION_SECRET = process.env.SESSION_SECRET;
 
 app.use(express.json());
+
+const sessionOptions = {
+  secret: SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+};
+app.use(session(sessionOptions));
 app.use(cors());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(userModel.authenticate()));
+
+passport.serializeUser(userModel.serializeUser());
+passport.deserializeUser(userModel.deserializeUser());
 
 mongoose.connect(URI, {
   useUnifiedTopology: true,
@@ -20,6 +39,12 @@ mongoose.connect(URI, {
 
 mongoose.connection.once("open", () => {
   console.log("Connected to Database");
+});
+
+app.get("/fakeuser", async (req, res) => {
+  const user = new userModel({ username: "test user" });
+  const newUser = await userModel.register(user, "monkey");
+  res.send(newUser);
 });
 
 app.get("/", (req, res) => {
