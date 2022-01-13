@@ -41,14 +41,25 @@ mongoose.connection.once("open", () => {
   console.log("Connected to Database");
 });
 
-app.get("/fakeuser", async (req, res) => {
-  const user = new userModel({ username: "test user" });
-  const newUser = await userModel.register(user, "monkey");
-  res.send(newUser);
-});
-
 app.get("/", (req, res) => {
   res.status(200).send("Hello Instagram Clone");
+});
+
+app.post("/signup", async (req, res) => {
+  const { username, password } = req.body;
+
+  const user = await new userModel({ username: username });
+  const newUser = await userModel.register(user, password);
+  res.send(newUser);
+  // const { body } = req;
+
+  // userModel.create(body, (err, data) => {
+  //   if (err) {
+  //     res.status(500).send(err);
+  //   } else {
+  //     res.status(201).send(data);
+  //   }
+  // });
 });
 
 app.post("/upload", (req, res) => {

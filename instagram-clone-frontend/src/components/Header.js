@@ -3,7 +3,13 @@ import "../styles/Header.css";
 import Button from "@mui/material/Button";
 import AddCircle from "@mui/icons-material/AddCircleOutline";
 
-function Header({ setUser, setOpen, user, setIsAddPostOpen }) {
+function Header({
+  setUser,
+  setIsLoginOpen,
+  setIsSignupOpen,
+  user,
+  setIsAddPostOpen,
+}) {
   return (
     <div className="app__header">
       <img
@@ -26,7 +32,10 @@ function Header({ setUser, setOpen, user, setIsAddPostOpen }) {
             Log Out
           </Button>
         ) : (
-          <Button onClick={() => setOpen(true)}>Sign Up</Button>
+          <>
+            <Button onClick={() => setIsSignupOpen(true)}>Sign Up</Button>
+            <Button onClick={() => setIsLoginOpen(true)}>Log IN</Button>
+          </>
         )}
       </div>
     </div>

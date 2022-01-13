@@ -2,12 +2,14 @@ import "./styles/App.css";
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Post from "./components/Post";
-import Modal from "./components/Modal";
-import { Button } from "@mui/material";
+import SignupModal from "./components/SingupModal";
+import LoginModal from "./components/LoginModal";
 import AddPostModal from "./components/AddPostModal";
 
 function App() {
-  const [open, setOpen] = useState(false);
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+
   const [isAddPostOpen, setIsAddPostOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState({
@@ -37,8 +39,9 @@ function App() {
   ));
 
   const handleClose = () => {
-    setOpen(false);
+    setIsSignupOpen(false);
     setIsAddPostOpen(false);
+    setIsLoginOpen(false);
   };
 
   const handleChange = (e) => {
@@ -46,19 +49,33 @@ function App() {
     setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const login = (e) => {
+    e.preventDefault();
+  };
+
   const signUp = (e) => {
     e.preventDefault();
-    console.log(userData.username + " signed up");
 
     const { username, email, password } = userData;
     if (username && email && password) {
-      setUser(userData.username);
-      setOpen(false);
-      setUserData({
-        username: "",
-        email: "",
-        password: "",
-      });
+      fetch("http://localhost:8081/signup", {
+        method: "POST",
+        body: JSON.stringify(userData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((e) => console.log(e));
+
+      // setUser(userData.username);
+      // setIsSignupOpen(false);
+      // setUserData({
+      //   username: "",
+      //   email: "",
+      //   password: "",
+      // });
     } else {
       alert("Please fill out all the fields");
     }
@@ -66,8 +83,8 @@ function App() {
 
   return (
     <div className="app">
-      <Modal
-        open={open}
+      <SignupModal
+        open={isSignupOpen}
         handleClose={handleClose}
         username={userData.username}
         email={userData.email}
@@ -75,12 +92,21 @@ function App() {
         handleChange={(e) => handleChange(e)}
         signUp={(e) => signUp(e)}
       />
+      <LoginModal
+        open={isLoginOpen}
+        handleClose={handleClose}
+        username={userData.username}
+        email={userData.email}
+        password={userData.password}
+        handleChange={(e) => handleChange(e)}
+        login={(e) => login(e)}
+      />
       <AddPostModal
         handleClose={() => handleClose()}
         isAddPostOpen={isAddPostOpen}
       />
       <Header
-        setOpen={setOpen}
+        setIsSignupOpen={setIsSignupOpen}
         setIsAddPostOpen={setIsAddPostOpen}
         user={user}
         setUser={setUser}
