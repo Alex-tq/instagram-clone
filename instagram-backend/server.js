@@ -47,10 +47,13 @@ app.get("/", (req, res) => {
 
 app.post("/signup", async (req, res) => {
   const { username, password } = req.body;
-
-  const user = await new userModel({ username: username });
-  const newUser = await userModel.register(user, password);
-  res.send(newUser);
+  try {
+    const user = await new userModel({ username: username });
+    const newUser = await userModel.register(user, password);
+    res.send(newUser);
+  } catch (e) {
+    console.log(e.message);
+  }
   // const { body } = req;
 
   // userModel.create(body, (err, data) => {
