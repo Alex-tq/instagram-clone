@@ -2,7 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import postModel from "./postModel.js";
+import postModel from "./models/postModel.js";
+import userModel from "./models/userModel.js";
 
 dotenv.config();
 
