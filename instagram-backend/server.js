@@ -7,6 +7,7 @@ import userModel from "./models/userModel.js";
 import passport from "passport";
 import LocalStrategy from "passport-local";
 import session from "express-session";
+import { isSignedIn } from "./middleware.js";
 
 dotenv.config();
 
@@ -85,7 +86,7 @@ app.post("/login", passport.authenticate("local"), (req, res) => {
   }
 });
 
-app.post("/upload", (req, res) => {
+app.post("/upload", isSignedIn, (req, res) => {
   const { body } = req;
 
   postModel.create(body, (err, data) => {
