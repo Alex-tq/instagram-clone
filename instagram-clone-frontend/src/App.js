@@ -130,6 +130,7 @@ function App() {
   };
 
   const logOut = () => {
+    fetch("http://localhost:8081/logout");
     setIsLoggedIn(false);
     setUser(null);
   };

@@ -52,6 +52,12 @@ app.get("/verify", (req, res) => {
   res.send({ isLoggedIn: session.isLoggedIn, username: session.username });
 });
 
+app.get("/logout", (req, res) => {
+  req.logout();
+  session.username = null;
+  session.isLoggedIn = false;
+});
+
 app.post("/signup", async (req, res) => {
   const { username, password } = req.body;
   try {
