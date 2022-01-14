@@ -45,11 +45,19 @@ app.get("/", (req, res) => {
   res.status(200).send("Hello Instagram Clone");
 });
 
+app.get("/verify", (req, res) => {
+  console.log(session.username);
+  console.log(session.isLoggedIn);
+  res.send({ isLoggedIn: session.isLoggedIn, username: session.username });
+});
+
 app.post("/signup", async (req, res) => {
   const { username, password } = req.body;
   try {
     const user = await new userModel({ username: username });
     const newUser = await userModel.register(user, password);
+    session.username = req.user.username;
+    session.isLoggedIn = req.isAuthenticated();
     res.send(newUser);
   } catch (e) {
     res.send({ error: e.message });
@@ -68,6 +76,8 @@ app.post("/signup", async (req, res) => {
 app.post("/login", passport.authenticate("local"), (req, res) => {
   try {
     console.log("your in");
+    session.username = req.user.username;
+    session.isLoggedIn = req.isAuthenticated();
     res.status(201).send({ success: "You are logged In" });
   } catch (e) {
     console.log(e.message);

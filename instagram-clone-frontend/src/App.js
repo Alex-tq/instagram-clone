@@ -23,11 +23,26 @@ function App() {
     const fetchData = async () => {
       const res = await fetch("http://localhost:8081/sync");
       const data = await res.json();
+
       setPosts(data);
     };
     fetchData();
-  }, []);
+    verify();
 
+    //console.log(getUser);
+  }, []);
+  const verify = async () => {
+    const getUser = await fetch("http://localhost:8081/verify")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        if (data.isLoggedIn) {
+          setIsLoggedIn(true);
+          setUser(data.userame);
+        }
+      });
+  };
   const postList = posts.map(({ imgUrl, avatarUrl, username, caption }) => (
     <Post
       key={username}
