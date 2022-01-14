@@ -65,6 +65,16 @@ app.post("/signup", async (req, res) => {
   // });
 });
 
+app.post("/login", passport.authenticate("local"), (req, res) => {
+  try {
+    console.log("your in");
+    res.status(201).send({ success: "You are logged In" });
+  } catch (e) {
+    console.log(e.message);
+    res.send({ error: e.message });
+  }
+});
+
 app.post("/upload", (req, res) => {
   const { body } = req;
 

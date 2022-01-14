@@ -9,6 +9,8 @@ function Header({
   setIsSignupOpen,
   user,
   setIsAddPostOpen,
+  isLoggedIn,
+  logOut,
 }) {
   return (
     <div className="app__header">
@@ -18,15 +20,15 @@ function Header({
         alt="instagram logo"
       />
       <div className="header_buttons">
-        {user && (
+        {isLoggedIn && (
           <Button onClick={() => setIsAddPostOpen(true)}>
             <AddCircle />
           </Button>
         )}
-        {user ? (
+        {isLoggedIn ? (
           <Button
             onClick={() => {
-              setUser(null);
+              logOut();
             }}
           >
             Log Out

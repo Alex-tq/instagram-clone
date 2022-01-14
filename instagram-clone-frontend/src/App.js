@@ -9,8 +9,8 @@ import AddPostModal from "./components/AddPostModal";
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-
   const [isAddPostOpen, setIsAddPostOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState({
     username: "",
@@ -51,7 +51,31 @@ function App() {
 
   const login = (e) => {
     e.preventDefault();
-    console.log("logging in");
+    const { username, password } = userData;
+
+    if (username && password) {
+      fetch("http://localhost:8081/login", {
+        method: "POST",
+        body: JSON.stringify(userData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.error) {
+            console.log(data.error);
+          } else {
+            setIsLoginOpen(false);
+            setIsLoggedIn(true);
+
+            //alert(data.success);
+          }
+        })
+        .catch((e) => {
+          alert("something went wrong");
+        });
+    }
   };
 
   const signUp = (e) => {
@@ -70,8 +94,11 @@ function App() {
         .then((data) => {
           if (data.error) {
             alert(data.error);
+          } else {
+            setIsLoggedIn(true);
+            setIsSignupOpen(false);
+            console.log(data);
           }
-          console.log(data);
         })
         .catch((e) => console.log(e));
 
@@ -85,6 +112,11 @@ function App() {
     } else {
       alert("Please fill out all the fields");
     }
+  };
+
+  const logOut = () => {
+    setIsLoggedIn(false);
+    setUser(null);
   };
 
   return (
@@ -112,6 +144,8 @@ function App() {
         isAddPostOpen={isAddPostOpen}
       />
       <Header
+        logOut={logOut}
+        isLoggedIn={isLoggedIn}
         setIsSignupOpen={setIsSignupOpen}
         setIsAddPostOpen={setIsAddPostOpen}
         setIsLoginOpen={setIsLoginOpen}
