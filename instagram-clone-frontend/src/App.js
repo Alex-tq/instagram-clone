@@ -39,19 +39,15 @@ function App() {
       .then((data) => {
         if (data.isLoggedIn) {
           setIsLoggedIn(true);
-          setUser(data.userame);
+          setUser(data.username);
         }
+      })
+      .then(() => {
+        console.log(isLoggedIn);
+
+        console.log(user);
       });
   };
-  const postList = posts.map(({ imgUrl, avatarUrl, username, caption }) => (
-    <Post
-      key={username}
-      avatarUrl={avatarUrl}
-      username={username}
-      caption={caption}
-      imgUrl={imgUrl}
-    />
-  ));
 
   const handleClose = () => {
     setIsSignupOpen(false);
@@ -83,6 +79,11 @@ function App() {
           } else {
             setIsLoginOpen(false);
             setIsLoggedIn(true);
+            setUserData({
+              username: "",
+              email: "",
+              password: "",
+            });
 
             //alert(data.success);
           }
@@ -112,18 +113,16 @@ function App() {
           } else {
             setIsLoggedIn(true);
             setIsSignupOpen(false);
+            setUser(data.username);
+            setUserData({
+              username: "",
+              email: "",
+              password: "",
+            });
             console.log(data);
           }
         })
         .catch((e) => console.log(e));
-
-      // setUser(userData.username);
-      // setIsSignupOpen(false);
-      // setUserData({
-      //   username: "",
-      //   email: "",
-      //   password: "",
-      // });
     } else {
       alert("Please fill out all the fields");
     }
@@ -134,7 +133,17 @@ function App() {
     setIsLoggedIn(false);
     setUser(null);
   };
-
+  const postList = posts.map(
+    ({ imgUrl, avatarUrl, username, caption, _id }) => (
+      <Post
+        key={_id}
+        avatarUrl={avatarUrl}
+        username={username}
+        caption={caption}
+        imgUrl={imgUrl}
+      />
+    )
+  );
   return (
     <div className="app">
       <SignupModal
@@ -158,6 +167,7 @@ function App() {
       <AddPostModal
         handleClose={() => handleClose()}
         isAddPostOpen={isAddPostOpen}
+        setIsAddPostOpen={setIsAddPostOpen}
       />
       <Header
         logOut={logOut}

@@ -3,14 +3,37 @@ import Modal from "@mui/material/Modal";
 import "../styles/Modal.css";
 import { Button } from "@mui/material";
 
-function AddPostModal({ isAddPostOpen, handleClose }) {
+function AddPostModal({
+  isAddPostOpen,
+  setIsAddPostOpen,
+  handleClose,
+  upload,
+}) {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
 
-  const handleUpload = () => {
+  const testUpload = {
+    username: "petse",
+    caption: "This is another caption",
+    imgUrl:
+      "https://images.unsplash.com/photo-1642034554560-a344b6f059dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8N3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
+    comments: [],
+  };
+
+  const handleUpload = (e) => {
     //TODO
-    console.log(`${image.name} was uploaded`);
+    e.preventDefault();
+    setIsAddPostOpen(false);
+    //console.log(`${image.name} was uploaded`);
+
+    fetch("http://localhost:8081/upload", {
+      method: "POST",
+      body: JSON.stringify(testUpload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
