@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import "../styles/Modal.css";
 import { Button } from "@mui/material";
+import axios from "axios";
 
-function AddPostModal({
-  isAddPostOpen,
-  setIsAddPostOpen,
-  handleClose,
-  upload,
-}) {
+function AddPostModal({ isAddPostOpen, setIsAddPostOpen, handleClose }) {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -24,16 +20,27 @@ function AddPostModal({
   const handleUpload = (e) => {
     //TODO
     e.preventDefault();
-    setIsAddPostOpen(false);
-    //console.log(`${image.name} was uploaded`);
 
-    fetch("http://localhost:8081/upload", {
-      method: "POST",
-      body: JSON.stringify(testUpload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const data = new FormData();
+    data.append("caption", caption);
+    data.append("image", image);
+
+    setIsAddPostOpen(false);
+    console.log(data);
+
+    axios
+      .post("https://httpbin.org/anything", data)
+      .then((res) => console.log(res));
+
+    // fetch("https://httpbin.org/anything", {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    // .then((res) => res.json())
+    // .then((data) => console.log(data));
   };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -56,7 +63,7 @@ function AddPostModal({
             name="caption"
             placeholder="Enter a caption"
           />
-          <input onChange={handleChange} type="file" name="upload" id="" />
+          <input onChange={handleChange} type="file" name="image" id="image" />
           <Button onClick={handleUpload}>Upload</Button>
         </div>
       </Modal>
