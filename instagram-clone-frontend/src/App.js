@@ -168,6 +168,7 @@ function App() {
         handleClose={() => handleClose()}
         isAddPostOpen={isAddPostOpen}
         setIsAddPostOpen={setIsAddPostOpen}
+        username={user}
       />
       <Header
         logOut={logOut}

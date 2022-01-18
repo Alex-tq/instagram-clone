@@ -8,8 +8,12 @@ import passport from "passport";
 import LocalStrategy from "passport-local";
 import session from "express-session";
 import { isSignedIn } from "./middleware.js";
+import multer from "multer";
+import { storage, cloudinary } from "./cloudinary/index.js";
 
 dotenv.config();
+
+const upload = multer({ storage });
 
 const PORT = process.env.PORT || 8081;
 const app = express();
@@ -98,12 +102,18 @@ app.post("/login", passport.authenticate("local"), (req, res) => {
   }
 });
 
-app.post("/upload", isSignedIn, (req, res) => {
+app.post("/upload", isSignedIn, upload.single("image"), (req, res) => {
   const { body } = req;
   // console.log("uploading", req.user);
   // console.log(Object.keys(req));
 
-  postModel.create(body, (err, data) => {
+  const imgUrl = req.file.path;
+  console.log(req.body);
+  console.log(req.file);
+
+  const finishedPost = { ...body, imgUrl, comments: [] };
+
+  postModel.create(finishedPost, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {

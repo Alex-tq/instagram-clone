@@ -4,7 +4,12 @@ import "../styles/Modal.css";
 import { Button } from "@mui/material";
 import axios from "axios";
 
-function AddPostModal({ isAddPostOpen, setIsAddPostOpen, handleClose }) {
+function AddPostModal({
+  isAddPostOpen,
+  setIsAddPostOpen,
+  handleClose,
+  username,
+}) {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -23,13 +28,14 @@ function AddPostModal({ isAddPostOpen, setIsAddPostOpen, handleClose }) {
 
     const data = new FormData();
     data.append("caption", caption);
+    data.append("username", username);
     data.append("image", image);
 
     setIsAddPostOpen(false);
     console.log(data);
 
     axios
-      .post("https://httpbin.org/anything", data)
+      .post("http://localhost:8081/upload", data)
       .then((res) => console.log(res));
 
     // fetch("https://httpbin.org/anything", {

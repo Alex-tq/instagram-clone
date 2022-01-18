@@ -2,7 +2,12 @@ import React from "react";
 import "../styles/Post.css";
 import Avatar from "@mui/material/Avatar";
 
-function Post({ username, caption, imgUrl, avatarUrl }) {
+function Post({
+  username = "Anonimous",
+  caption = "",
+  imgUrl = "",
+  avatarUrl = "",
+}) {
   return (
     <div className="post">
       <div className="post_header">
