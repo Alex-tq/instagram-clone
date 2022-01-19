@@ -20,17 +20,17 @@ function App() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("http://localhost:8081/sync");
-      const data = await res.json();
-
-      setPosts(data);
-    };
     fetchData();
     verify();
-
-    //console.log(getUser);
   }, []);
+
+  const fetchData = async () => {
+    const res = await fetch("http://localhost:8081/sync");
+    const data = await res.json();
+
+    setPosts(data.reverse());
+  };
+
   const verify = async () => {
     const getUser = await fetch("http://localhost:8081/verify")
       .then((res) => {
@@ -170,6 +170,7 @@ function App() {
         isAddPostOpen={isAddPostOpen}
         setIsAddPostOpen={setIsAddPostOpen}
         username={user}
+        fetchData={fetchData}
       />
       <Header
         logOut={logOut}
