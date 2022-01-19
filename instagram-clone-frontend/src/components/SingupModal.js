@@ -17,7 +17,7 @@ function Modal({
     <div className="modal">
       <SignupModal open={open} onClose={handleClose}>
         <div className="modal_content">
-          <form className="signup_form">
+          <form className="signup_form" onSubmit={signUp}>
             <div className="modal_logo">
               <img
                 className="modal__logoImage"
@@ -30,11 +30,17 @@ function Modal({
               placeholder="usename"
               name="username"
               value={username}
+              minlength="3"
+              maxlength="50"
+              required
               onChange={handleChange}
             />
             <Input
               type="text"
               placeholder="email"
+              type="email"
+              required
+              maxlength="50"
               name="email"
               value={email}
               onChange={handleChange}
@@ -43,10 +49,13 @@ function Modal({
               type="text"
               placeholder="password"
               name="password"
+              minlength="6"
+              maxlength="50"
+              required
               value={password}
               onChange={handleChange}
             />
-            <Button onClick={signUp}>Sing Up</Button>
+            <Button type="submit">Sing Up</Button>
           </form>
         </div>
       </SignupModal>
