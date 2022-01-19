@@ -11,8 +11,10 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  folder: "InstagramClone",
-  allowedFormats: ["jpeg", "png", "jpg"],
+  params: {
+    folder: "InstagramClone",
+    allowedFormats: ["jpeg", "png", "jpg"],
+  },
 });
 
 export { cloudinary, storage };
