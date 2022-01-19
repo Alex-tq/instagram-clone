@@ -17,7 +17,7 @@ function Modal({
     <div className="modal">
       <SignupModal open={open} onClose={handleClose}>
         <div className="modal_content">
-          <form className="signup_form">
+          <form className="signup_form" onSubmit={login}>
             <div className="modal_logo">
               <img
                 className="modal__logoImage"
@@ -45,7 +45,7 @@ function Modal({
               value={password}
               onChange={handleChange}
             />
-            <Button onClick={login}>Log In</Button>
+            <Button type="submit">Log In</Button>
           </form>
         </div>
       </SignupModal>
