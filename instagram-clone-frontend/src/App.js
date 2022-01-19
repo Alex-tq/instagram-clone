@@ -79,6 +79,7 @@ function App() {
           } else {
             setIsLoginOpen(false);
             setIsLoggedIn(true);
+            setUser(userData.username);
             setUserData({
               username: "",
               email: "",
