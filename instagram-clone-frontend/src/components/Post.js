@@ -20,13 +20,14 @@ function Post({
 
   const makePost = async () => {
     const newComment = { id, comment };
-    console.log(newComment);
-    setComment("");
-
-    const res = await axios.put("http://localhost:8081/comment", {
-      newComment,
-    });
-    console.log(res);
+    if (comment) {
+      setComment("");
+      const res = await axios.put("http://localhost:8081/comment", {
+        newComment,
+      });
+    } else {
+      alert("must write a comment first");
+    }
   };
 
   return (
