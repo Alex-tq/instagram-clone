@@ -84,7 +84,7 @@ function App() {
           }
         })
         .catch((e) => {
-          alert("something went wrong");
+          alert("Check your credentials and try agaain");
         });
     }
   };
