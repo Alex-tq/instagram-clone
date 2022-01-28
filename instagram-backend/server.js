@@ -6,7 +6,7 @@ import postModel from "./models/postModel.js";
 import userModel from "./models/userModel.js";
 import passport from "passport";
 import LocalStrategy from "passport-local";
-import session from "express-session";
+import session, { Session } from "express-session";
 import { isSignedIn } from "./middleware.js";
 import multer from "multer";
 import { storage, cloudinary } from "./cloudinary/index.js";
@@ -51,16 +51,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/verify", (req, res) => {
-  // console.log("IN VERIFY ROUTE req.session: ", req.user);
-  // console.log("IN VERIFY ROUTE: ", req.isAuthenticated());
-  // console.log(session.username);
-  // console.log(session.isLoggedIn);
+  console.log("VERIFYING USER");
   res.send({ isLoggedIn: session.isLoggedIn, username: session.username });
 });
 
 app.get("/logout", (req, res) => {
-  console.log("logging out");
-  //console.log(Object.keys(req));
+  console.log("LOGGING OUT");
   req.logout();
   session.username = null;
   session.isLoggedIn = false;
@@ -68,7 +64,7 @@ app.get("/logout", (req, res) => {
 
 app.post("/signup", async (req, res, next) => {
   console.log("signing up ");
-  // console.log(Object.keys(req));
+
   const { username, password } = req.body;
   try {
     const user = await new userModel({ username: username });
@@ -90,9 +86,6 @@ app.post("/signup", async (req, res, next) => {
 
 app.post("/login", passport.authenticate("local"), (req, res) => {
   try {
-    //console.log("req.session on login", req.session);
-    // console.log("you're in", req.user);
-    // console.log(Object.keys(req));
     session.username = req.user.username;
     session.isLoggedIn = req.isAuthenticated();
     res.status(201).send({ success: "You are logged In" });
@@ -104,17 +97,12 @@ app.post("/login", passport.authenticate("local"), (req, res) => {
 
 app.post("/upload", isSignedIn, upload.single("image"), (req, res) => {
   const { body } = req;
-  // console.log("uploading", req.user);
-  // console.log(Object.keys(req));
-
   const imgUrl = req.file.path;
-  console.log(req.body);
-  console.log(req.file);
 
   const finishedPost = {
     ...body,
     imgUrl,
-    comments: ["hello", "testing", "comments"],
+    comments: [],
   };
 
   postModel.create(finishedPost, (err, data) => {
@@ -128,20 +116,12 @@ app.post("/upload", isSignedIn, upload.single("image"), (req, res) => {
 
 app.put("/comment", isSignedIn, async (req, res) => {
   const { id, comment } = req.body.newComment;
-
-  console.log("THIS IS THE REQUEST BODY");
-  console.log(req.body);
-  console.log("THIS ARE THE ID AND COMMENT");
-  console.log(id);
-  console.log(comment);
-
   await postModel
     .findById(id, (err, post) => {
       if (err) {
-        console.log("THIS IS THE ERROR IN findById");
+        console.log(err);
         res.status(500).send(err);
       } else {
-        console.log("THIS IS SUCCESS IN findById");
         post.comments = [...post.comments, comment];
         post.save();
         res.send("comment added");

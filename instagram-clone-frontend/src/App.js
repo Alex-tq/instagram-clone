@@ -27,7 +27,6 @@ function App() {
   const fetchData = async () => {
     const res = await fetch("http://localhost:8081/sync");
     const data = await res.json();
-
     setPosts(data.reverse());
   };
 
@@ -41,11 +40,6 @@ function App() {
           setIsLoggedIn(true);
           setUser(data.username);
         }
-      })
-      .then(() => {
-        console.log(isLoggedIn);
-
-        console.log(user);
       });
   };
 
@@ -134,6 +128,7 @@ function App() {
     setIsLoggedIn(false);
     setUser(null);
   };
+
   const postList = posts.map(
     ({ imgUrl, avatarUrl, username, comments, caption, _id }) => (
       <Post
@@ -146,6 +141,7 @@ function App() {
         comments={comments}
         imgUrl={imgUrl}
         isLoggedIn={isLoggedIn}
+        fetchData={fetchData}
       />
     )
   );

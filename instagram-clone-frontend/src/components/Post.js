@@ -12,6 +12,7 @@ function Post({
   imgUrl = "",
   avatarUrl = "",
   isLoggedIn,
+  fetchData,
 }) {
   const [comment, setComment] = useState({
     author: user,
@@ -25,10 +26,10 @@ function Post({
     setComment((prev) => ({ ...prev, text: value }));
   };
 
-  const makeComment = async () => {
+  const makeComment = () => {
     const newComment = {
       id,
-      comment: { ...comment, id: Date.now().toString() },
+      comment: { ...comment, author: user, id: Date.now().toString() },
     };
     if (!isLoggedIn) {
       alert("Must log in to make comments");
@@ -41,9 +42,13 @@ function Post({
         text: "",
         id: null,
       });
-      const res = await axios.put("http://localhost:8081/comment", {
-        newComment,
-      });
+      axios
+        .put("http://localhost:8081/comment", {
+          newComment,
+        })
+        .then(() => {
+          fetchData();
+        });
     } else {
       alert("must write a comment first");
     }
