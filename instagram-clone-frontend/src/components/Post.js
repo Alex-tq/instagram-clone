@@ -9,6 +9,7 @@ function Post({
   caption = "",
   imgUrl = "",
   avatarUrl = "",
+  isLoggedIn,
 }) {
   const [comment, setComment] = useState("");
 
@@ -20,6 +21,12 @@ function Post({
 
   const makePost = async () => {
     const newComment = { id, comment };
+
+    if (!isLoggedIn) {
+      alert("Must log in to make comments");
+      return;
+    }
+
     if (comment) {
       setComment("");
       const res = await axios.put("http://localhost:8081/comment", {

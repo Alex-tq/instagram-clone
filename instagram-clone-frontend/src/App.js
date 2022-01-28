@@ -143,6 +143,7 @@ function App() {
         username={username}
         caption={caption}
         imgUrl={imgUrl}
+        isLoggedIn={isLoggedIn}
       />
     )
   );
