@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/Post.css";
 import Avatar from "@mui/material/Avatar";
 import axios from "axios";
+import baseUrl from "../utills";
 
 function Post({
   username = "Anonimous",
@@ -43,7 +44,7 @@ function Post({
         id: null,
       });
       axios
-        .put("http://localhost:8081/comment", {
+        .put(baseUrl + "comment", {
           newComment,
         })
         .then(() => {

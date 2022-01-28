@@ -3,6 +3,7 @@ import Modal from "@mui/material/Modal";
 import "../styles/Modal.css";
 import { Button } from "@mui/material";
 import axios from "axios";
+import baseUrl from "../utills";
 
 function AddPostModal({
   isAddPostOpen,
@@ -25,7 +26,7 @@ function AddPostModal({
     setIsAddPostOpen(false);
     console.log(data);
 
-    axios.post("http://localhost:8081/upload", data).then((res) => {
+    axios.post(baseUrl + "upload", data).then((res) => {
       console.log(res);
       fetchData();
     });

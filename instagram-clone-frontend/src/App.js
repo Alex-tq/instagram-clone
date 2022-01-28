@@ -5,6 +5,7 @@ import Post from "./components/Post";
 import SignupModal from "./components/SingupModal";
 import LoginModal from "./components/LoginModal";
 import AddPostModal from "./components/AddPostModal";
+import baseUrl from "./utills";
 
 function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -25,13 +26,13 @@ function App() {
   }, []);
 
   const fetchData = async () => {
-    const res = await fetch("http://localhost:8081/sync");
+    const res = await fetch(baseUrl + "sync");
     const data = await res.json();
     setPosts(data.reverse());
   };
 
   const verify = async () => {
-    const getUser = await fetch("http://localhost:8081/verify")
+    const getUser = await fetch(baseUrl + "verify")
       .then((res) => {
         return res.json();
       })
@@ -59,7 +60,7 @@ function App() {
     const { username, password } = userData;
 
     if (username && password) {
-      fetch("http://localhost:8081/login", {
+      fetch(baseUrl + "login", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
@@ -94,7 +95,7 @@ function App() {
 
     const { username, email, password } = userData;
     if (username && email && password) {
-      fetch("http://localhost:8081/signup", {
+      fetch(baseUrl + "signup", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: {
@@ -124,7 +125,7 @@ function App() {
   };
 
   const logOut = () => {
-    fetch("http://localhost:8081/logout");
+    fetch(baseUrl + "logout");
     setIsLoggedIn(false);
     setUser(null);
   };
