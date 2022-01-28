@@ -135,13 +135,15 @@ function App() {
     setUser(null);
   };
   const postList = posts.map(
-    ({ imgUrl, avatarUrl, username, caption, _id }) => (
+    ({ imgUrl, avatarUrl, username, comments, caption, _id }) => (
       <Post
         key={_id}
         id={_id}
         avatarUrl={avatarUrl}
         username={username}
+        user={user}
         caption={caption}
+        comments={comments}
         imgUrl={imgUrl}
         isLoggedIn={isLoggedIn}
       />

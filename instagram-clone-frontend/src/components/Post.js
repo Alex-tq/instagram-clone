@@ -5,30 +5,42 @@ import axios from "axios";
 
 function Post({
   username = "Anonimous",
+  user,
   id,
   caption = "",
+  comments,
   imgUrl = "",
   avatarUrl = "",
   isLoggedIn,
 }) {
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState({
+    author: user,
+    text: "",
+    id: null,
+  });
 
   const handleChange = (e) => {
     const { value } = e.target;
 
-    setComment(value);
+    setComment((prev) => ({ ...prev, text: value }));
   };
 
-  const makePost = async () => {
-    const newComment = { id, comment };
-
+  const makeComment = async () => {
+    const newComment = {
+      id,
+      comment: { ...comment, id: Date.now().toString() },
+    };
     if (!isLoggedIn) {
       alert("Must log in to make comments");
       return;
     }
 
-    if (comment) {
-      setComment("");
+    if (comment.text) {
+      setComment({
+        author: user,
+        text: "",
+        id: null,
+      });
       const res = await axios.put("http://localhost:8081/comment", {
         newComment,
       });
@@ -57,24 +69,24 @@ function Post({
         <strong>{username} </strong> {`: ${caption}`}
       </p>
       <div className="comment_section">
-        <p className="comment">
-          <strong>SomeUser </strong> Some comment
-        </p>
-        <p className="comment">
-          <strong>SomeUser </strong> Some comment
-        </p>
-        <p className="comment">
-          <strong>SomeUser </strong> Some comment
-        </p>
+        {comments &&
+          comments.map((comment) => {
+            return (
+              <p key={comment.id} className="comment">
+                <strong>{comment.author} </strong> {comment.text}
+              </p>
+            );
+          })}
+
         <div className="comment_form">
           <input
             onChange={handleChange}
             type="text"
             name="comment"
             id=""
-            value={comment}
+            value={comment.text}
           />
-          <button onClick={makePost}>Post</button>
+          <button onClick={makeComment}>Post</button>
         </div>
       </div>
     </div>
