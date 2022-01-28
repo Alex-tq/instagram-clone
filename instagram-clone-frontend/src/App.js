@@ -138,6 +138,7 @@ function App() {
     ({ imgUrl, avatarUrl, username, caption, _id }) => (
       <Post
         key={_id}
+        id={_id}
         avatarUrl={avatarUrl}
         username={username}
         caption={caption}

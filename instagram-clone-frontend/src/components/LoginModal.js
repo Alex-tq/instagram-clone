@@ -29,8 +29,8 @@ function Modal({
               type="text"
               placeholder="usename"
               name="username"
-              minlength="3"
-              maxlength="50"
+              minLength="3"
+              maxLength="50"
               required
               value={username}
               onChange={handleChange}
@@ -39,8 +39,8 @@ function Modal({
               type="text"
               placeholder="password"
               name="password"
-              minlength="6"
-              maxlength="50"
+              minLength="6"
+              maxLength="50"
               required
               value={password}
               onChange={handleChange}

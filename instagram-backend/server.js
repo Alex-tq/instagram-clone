@@ -111,7 +111,11 @@ app.post("/upload", isSignedIn, upload.single("image"), (req, res) => {
   console.log(req.body);
   console.log(req.file);
 
-  const finishedPost = { ...body, imgUrl, comments: [] };
+  const finishedPost = {
+    ...body,
+    imgUrl,
+    comments: ["hello", "testing", "comments"],
+  };
 
   postModel.create(finishedPost, (err, data) => {
     if (err) {
@@ -120,6 +124,31 @@ app.post("/upload", isSignedIn, upload.single("image"), (req, res) => {
       res.status(201).send(data);
     }
   });
+});
+
+app.put("/comment", isSignedIn, async (req, res) => {
+  const { id, comment } = req.body.newComment;
+
+  console.log("THIS IS THE REQUEST BODY");
+  console.log(req.body);
+  console.log("THIS ARE THE ID AND COMMENT");
+  console.log(id);
+  console.log(comment);
+
+  await postModel
+    .findById(id, (err, post) => {
+      if (err) {
+        console.log("THIS IS THE ERROR IN findById");
+        res.status(500).send(err);
+      } else {
+        console.log("THIS IS SUCCESS IN findById");
+        post.comments = [...post.comments, comment];
+        post.save();
+        res.send("comment added");
+      }
+    })
+    .clone()
+    .catch((err) => console.log(err));
 });
 
 app.get("/sync", (req, res) => {

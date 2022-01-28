@@ -1,13 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Post.css";
 import Avatar from "@mui/material/Avatar";
+import axios from "axios";
 
 function Post({
   username = "Anonimous",
+  id,
   caption = "",
   imgUrl = "",
   avatarUrl = "",
 }) {
+  const [comment, setComment] = useState("");
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+
+    setComment(value);
+  };
+
+  const makePost = async () => {
+    const newComment = { id, comment };
+    console.log(newComment);
+    setComment("");
+
+    const res = await axios.put("http://localhost:8081/comment", {
+      newComment,
+    });
+    console.log(res);
+  };
+
   return (
     <div className="post">
       <div className="post_header">
@@ -38,8 +59,14 @@ function Post({
           <strong>SomeUser </strong> Some comment
         </p>
         <div className="comment_form">
-          <input type="text" name="comment" id="" />
-          <button>Post</button>
+          <input
+            onChange={handleChange}
+            type="text"
+            name="comment"
+            id=""
+            value={comment}
+          />
+          <button onClick={makePost}>Post</button>
         </div>
       </div>
     </div>
