@@ -29,7 +29,12 @@ const sessionOptions = {
   saveUninitialized: false,
 };
 app.use(session(sessionOptions));
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -66,6 +71,7 @@ app.post("/signup", async (req, res, next) => {
   console.log("signing up ");
 
   const { username, password } = req.body;
+
   try {
     const user = await new userModel({ username: username });
     const newUser = await userModel.register(user, password);
@@ -86,6 +92,7 @@ app.post("/signup", async (req, res, next) => {
 
 app.post("/login", passport.authenticate("local"), (req, res) => {
   try {
+    console.log("req.user.username");
     session.username = req.user.username;
     session.isLoggedIn = req.isAuthenticated();
     res.status(201).send({ success: "You are logged In" });

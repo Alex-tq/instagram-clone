@@ -18,6 +18,11 @@ function AddPostModal({
   const handleUpload = (e) => {
     e.preventDefault();
 
+    if (!image) {
+      alert("please select a file");
+      return;
+    }
+
     const data = new FormData();
     data.append("caption", caption);
     data.append("username", username);
@@ -28,6 +33,7 @@ function AddPostModal({
 
     axios.post(baseUrl + "upload", data).then((res) => {
       console.log(res);
+      setImage(null);
       fetchData();
     });
   };
