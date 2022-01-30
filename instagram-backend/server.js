@@ -32,7 +32,7 @@ app.use(session(sessionOptions));
 app.use(
   cors({
     credentials: true,
-    origin: "https://instagram-clone-3e26f.firebaseapp.com",
+    origin: "http://localhost:3000",
   })
 );
 
