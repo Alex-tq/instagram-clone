@@ -33,6 +33,7 @@
   padding: 0.5rem;
 }
 .comment_form {
+  border-top: solid 1px rgb(82, 80, 80);
   margin-top: 10px;
 
   display: flex;
@@ -42,8 +43,12 @@
 .comment_form input {
   width: 80%;
   height: 100%;
+  border: none;
 }
 .comment_form button {
   width: 20%;
   height: 100%;
+  border: none;
+  color: rgb(124, 252, 252);
+  background-color: transparent;
 }

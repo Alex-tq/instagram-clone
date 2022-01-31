@@ -90,6 +90,7 @@ function Post({
             type="text"
             name="comment"
             id=""
+            placeholder="Add a comment..."
             value={comment.text}
           />
           <button onClick={makeComment}>Post</button>
