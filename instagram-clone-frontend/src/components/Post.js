@@ -3,6 +3,7 @@ import "../styles/Post.css";
 import Avatar from "@mui/material/Avatar";
 import axios from "axios";
 import baseUrl from "../utills";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 
 function Post({
   username = "Anonimous",
@@ -75,16 +76,19 @@ function Post({
         <strong>{username} </strong> {`: ${caption}`}
       </p>
       <div className="comment_section">
-        {comments &&
-          comments.map((comment) => {
-            return (
-              <p key={comment.id} className="comment">
-                <strong>{comment.author} </strong> {comment.text}
-              </p>
-            );
-          })}
+        <div className="comments">
+          {comments &&
+            comments.map((comment) => {
+              return (
+                <p key={comment.id} className="comment">
+                  <strong>{comment.author} </strong> {comment.text}
+                </p>
+              );
+            })}
+        </div>
 
         <div className="comment_form">
+          <SentimentSatisfiedAltIcon id="smily-face" />
           <input
             onChange={handleChange}
             type="text"
