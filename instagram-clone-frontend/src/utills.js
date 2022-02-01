@@ -1,2 +1,2 @@
-const baseUrl = "https://instagram-backend11.herokuapp.com/";
+const baseUrl = "http://localhost:8081/";
 export default baseUrl;
