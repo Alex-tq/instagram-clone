@@ -1,5 +1,4 @@
 .post {
-  min-height: 90vh;
   width: 500px;
   max-width: 100%;
   border: 1px solid lightgray;
@@ -44,7 +43,6 @@
 .comment_form {
   padding: 0.2rem;
   margin-top: auto;
-  /* padding: 0.5rem; */
   border-top: solid 1px rgb(228, 228, 228);
   display: flex;
   justify-content: center;
