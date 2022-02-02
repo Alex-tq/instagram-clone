@@ -11,18 +11,22 @@ import { isSignedIn } from "./middleware.js";
 import multer from "multer";
 import { storage, cloudinary } from "./cloudinary/index.js";
 
+//Gives Acces to the environment vaiables in the .env file
 dotenv.config();
 
 const upload = multer({ storage });
 
+//set port and initialize the  express app
 const PORT = process.env.PORT || 8081;
 const app = express();
 
+//Grab uri from the environment variables
 const URI = process.env.MONGODB_URI;
+
 const SESSION_SECRET = process.env.SESSION_SECRET;
 
+//middlewares
 app.use(express.json());
-
 const sessionOptions = {
   secret: SESSION_SECRET,
   resave: false,
@@ -36,21 +40,24 @@ app.use(
   })
 );
 
+//passport.js middlewares and password.js setup
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(userModel.authenticate()));
-
 passport.serializeUser(userModel.serializeUser());
 passport.deserializeUser(userModel.deserializeUser());
 
+//connects to the database
 mongoose.connect(URI, {
   useUnifiedTopology: true,
 });
 
+//performs an action when the datbase connection is stablished
 mongoose.connection.once("open", () => {
   console.log("Connected to Database");
 });
 
+//Routes
 app.get("/", (req, res) => {
   res.status(200).send("Hello Instagram Clone");
 });
@@ -148,6 +155,7 @@ app.get("/sync", (req, res) => {
   });
 });
 
+//start the server on a given port
 app.listen(PORT, () => {
   console.log("listening on port " + PORT);
 });
