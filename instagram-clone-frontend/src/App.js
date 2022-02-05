@@ -87,7 +87,7 @@ function App() {
     if (username && email && password) {
       axios
         .post(baseUrl + "signup", { ...userData })
-        .then((data) => {
+        .then(({ data }) => {
           if (data.error) {
             alert(data.error);
           } else {
@@ -99,7 +99,6 @@ function App() {
               email: "",
               password: "",
             });
-            console.log(data);
           }
         })
         .catch((e) => console.log(e));
